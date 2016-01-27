@@ -5,12 +5,11 @@
 
 ## Tables
 
-1. 1 HDFS file
-2. 1 HBase table 
-3. 1 Hive table with partitions
+1. 1 HDFS file (transaction data)
+2. 1 HBase table (product data)
+3. 1 Hive table with partitions (customer data)
 
-
-## In Hdfs
+## In HDFS
 To create HDFS file and data:
 ```
 sh create_hdfs.sh
@@ -38,6 +37,7 @@ sh create_hbase.sh
 1. Readable table for HDFS file
 2. Readable table for HBase table
 3. Readable table for Hive table
+4. Writable table for HDFS file
 
 To create HAWQ tables:
 ```
@@ -51,7 +51,44 @@ Hive table query with filter on partition fields
 Write the results into HDFS table
 
 To run queries via HAWQ:
+
+Top 5 products of a specific country (Belgium)
 ```
-psql -d demo -f queries.sql
+SELECT count(*) AS number_of_purchases, products."product:name"
+FROM products, customers, transactions
+WHERE products.recordkey = transactions.product_id
+AND   customers.customer_id = transactions.customer_id
+AND   customers.country = 'Belgium'
+GROUP BY products."product:name"
+ORDER BY number_of_purchases DESC
+LIMIT 5;
 ```
 
+Top 5 Customers by revenue, who bought items below 50$
+```
+SELECT customers.first_name|| ' ' || customers.last_name as customer_name, SUM(products."product:price") as revenue
+FROM products, customers, transactions
+WHERE products.recordkey = transactions.product_id
+AND   customers.customer_id = transactions.customer_id
+AND   products."product:price" < 50
+GROUP BY customers.customer_id, customers.first_name, customers.last_name
+ORDER BY revenue DESC
+LIMIT 5;
+```
+
+Total spend per customer. Result written to HDFS via writable table
+
+```
+INSERT INTO customer_spend
+SELECT customers.first_name|| ' ' || customers.last_name as customer_name, SUM(products."product:price") as revenue
+FROM products, customers, transactions
+WHERE products.recordkey = transactions.product_id
+AND   customers.customer_id = transactions.customer_id
+GROUP BY customers.customer_id, customers.first_name, customers.last_name
+ORDER BY revenue DESC;
+```
+
+Check output on HDFS
+```
+hadoop fs -cat /pxf_demo/customer_spend/*
+```
