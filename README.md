@@ -9,20 +9,8 @@
 2. 1 HBase table 
 3. 1 Hive table with partitions
 
-## In HAWQ
 
-1. Readable table for HDFS file
-2. Readable table for HBase table
-3. Readable table for Hive table
-
-The queries:
-
-Join between all 3 readable table and a local HAWQ table.
-HBase table query with filter on text/int fields
-Hive table query with filter on partition fields
-Write the results into HDFS table
-
-########################################
+## In Hdfs
 To create HDFS file and data:
 ```
 sh create_hdfs.sh
@@ -44,6 +32,17 @@ To create HBase table and data:
 ```
 sh create_hbase.sh
 ```
+
+## In HAWQ
+
+1. Readable table for HDFS file
+2. Readable table for HBase table
+3. Readable table for Hive table
+
+Join between all 3 readable table and a local HAWQ table.
+HBase table query with filter on text/int fields
+Hive table query with filter on partition fields
+Write the results into HDFS table
 
 To create HAWQ tables:
 ```
