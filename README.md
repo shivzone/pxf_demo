@@ -39,16 +39,16 @@ sh create_hbase.sh
 2. Readable table for HBase table
 3. Readable table for Hive table
 
-Join between all 3 readable table and a local HAWQ table.
-HBase table query with filter on text/int fields
-Hive table query with filter on partition fields
-Write the results into HDFS table
-
 To create HAWQ tables:
 ```
 createdb demo
 psql -d demo -f create_hawq_tables.sql
 ```
+
+Join between all 3 readable table and a local HAWQ table.
+HBase table query with filter on text/int fields
+Hive table query with filter on partition fields
+Write the results into HDFS table
 
 To run queries via HAWQ:
 ```
