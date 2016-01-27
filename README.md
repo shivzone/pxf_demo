@@ -1,6 +1,9 @@
 # Demo Instructions
+## Prerequsites
+1. Hdfs, Hive, HBase setup
+2. HAWQ/PXF (https://github.com/apache/incubator-hawq) setup
 
-## In Hadoop: 
+## Tables
 
 1. 1 HDFS file
 2. 1 HBase table 
