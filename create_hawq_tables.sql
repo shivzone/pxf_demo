@@ -19,6 +19,18 @@ CREATE EXTERNAL TABLE products (
 LOCATION ('pxf://localhost:51200/products?PROFILE=HBase')
 FORMAT 'CUSTOM' (formatter='pxfwritable_import');
 
+-- create hive table, partitioned by country (customers)
+DROP EXTERNAL TABLE IF EXISTS customers;
+CREATE EXTERNAL TABLE customers (
+    customer_id integer,
+    first_name text,
+    last_name text,
+    address text,
+    city text,
+    country text )
+LOCATION ('pxf://localhost:51200/demo.customers?PROFILE=Hive')
+FORMAT 'CUSTOM' (formatter='pxfwritable_import');
+
 -- create writable hdfs table (customer_spend)
 DROP EXTERNAL TABLE IF EXISTS customer_spend;
 CREATE WRITABLE EXTERNAL TABLE customer_spend (
