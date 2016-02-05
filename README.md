@@ -52,7 +52,7 @@ Write the results into HDFS table
 
 To run queries via HAWQ:
 
-Top 5 products of a specific country (Belgium)
+Top 5 products of a specific country (Demonstrates querying against Hdfs,Hive & HBase with predicate push down to Hive) 
 ```
 SELECT count(*) AS number_of_purchases, products."product:name"
 FROM products, customers, transactions
@@ -64,7 +64,7 @@ ORDER BY number_of_purchases DESC
 LIMIT 5;
 ```
 
-Top 5 Customers by revenue, who bought items below 50$
+Top 5 Customers by revenue, who bought items below 50$ (Demonstrates querying against Hdfs,Hive & HBase with predicate push down to HBase)
 ```
 SELECT customers.first_name|| ' ' || customers.last_name as customer_name, SUM(products."product:price") as revenue
 FROM products, customers, transactions
@@ -76,7 +76,7 @@ ORDER BY revenue DESC
 LIMIT 5;
 ```
 
-Total spend per customer. Result written to HDFS via writable table
+Total spend per customer. Result written to HDFS via writable table (Query Hdfs,Hive & HBase and write back join query results back to Hdfs)
 
 ```
 INSERT INTO customer_spend
