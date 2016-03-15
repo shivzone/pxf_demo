@@ -1,4 +1,5 @@
 # Demo Instructions
+(Original version https://github.com/hornn/pxf_demo)
 ## Prerequsites
 1. Hdfs, Hive, HBase setup
 2. HAWQ/PXF (https://github.com/apache/incubator-hawq) setup
