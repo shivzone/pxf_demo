@@ -33,3 +33,8 @@ location ('pxf://localhost:51200/kafkatest1|office-4-24.pa.pivotal.io|iotstream'
 '&RESOLVER=org.apache.hawq.pxf.plugins.hdfs.StringPassResolver')
 FORMAT 'TEXT' (DELIMITER = ',');
 ```
+
+Query table
+```
+select sensor_id, avg(temperature), min(temperature), max(temperature), count(1) as "Number of samples", max(time) as "Latest sample" from kafkatest group by sensor_id order by 1;
+```
